@@ -87,9 +87,21 @@ for i in range(len(dfs)) :
 
 #### groupe by weekDay the aggregate by 'birth' (sum) #####
     
-sixties = pd.DataFrame(dfs[0].groupby('weekDay')['births'].sum())
-seventies = pd.DataFrame(dfs[1].groupby('weekDay')['births'].sum())
-heighties = pd.DataFrame(dfs[2].groupby('weekDay')['births'].sum())
+dfs[0] = pd.DataFrame(dfs[0].groupby('weekDay')['births'].sum())
+dfs[1] = pd.DataFrame(dfs[1].groupby('weekDay')['births'].sum())
+dfs[2] = pd.DataFrame(dfs[2].groupby('weekDay')['births'].sum())
+
+#### sorting the data by weekDay ####
+for i in range(len(dfs)) : 
+    df = dfs[i].copy()
+    df.index = weekDays
+    for day in weekDays : 
+        df['births'][day] = dfs[i]['births'][day]
+    dfs[i] = df    
+    
+sixties = dfs[0]
+seventies = dfs[1]
+heighties = dfs[2]
 
 ####### extract DataFarme to CSV ##########
 sixties.to_csv(path_or_buf = '60s.csv')
