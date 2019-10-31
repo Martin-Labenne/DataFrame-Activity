@@ -1,0 +1,8 @@
+Etude du nombre de naissances aux états unis dans les années 1969 à 1988.
+Les données brutes sont stockées dans le fichier births.csv 
+Après un preprocessing visant à retirer les données aberrantes 
+(cf description dans le fichier texte "netoyage des données"), 
+le but était d'extraire 3 dataset (annees 60, annees 70, annees 80)
+
+L'étape suivante sera de produire un graphique comparatif de ces 3 périodes.
+ 
