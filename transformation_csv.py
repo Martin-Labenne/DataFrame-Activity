@@ -52,3 +52,5 @@ births_transformed = pd.merge(births.copy()[['gender','births']], date,
                               left_on=births.index, right_on = date.index)
 
 del births_transformed['key_0']
+
+gb = births_transformed.groupby('date')['births'].sum()
