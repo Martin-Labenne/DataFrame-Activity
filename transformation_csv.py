@@ -71,7 +71,27 @@ seventies = gb[~(dt.date(1970, 1, 1) <= gb.index.values) ^
 # after 1980, January, the 1st
 heighties = gb[gb.index.values >= dt.date(1980, 1, 1)]
 
-#### extract DataFarme to CSV #####
+#### add a new column 'weekDay' in each DataFrame ####
+
+weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday',
+            'Friday', 'Saturday', 'Sunday']
+
+dfs = [sixties, seventies, heighties]
+
+for i in range(len(dfs)) : 
+    temp = {'weekDay' : []}
+    for date in dfs[i].index : # we fill temp with weekDay values
+        temp['weekDay'].append(weekDays[date.weekday()]) # date.weekday()
+    temp_df = pd.DataFrame(temp)                  # retourne un int (0 -> 6)
+    dfs[i] = pd.merge(dfs[i], temp_df, on=dfs[i].index)
+
+#### groupe by weekDay the aggregate by 'birth' (sum) #####
+    
+sixties = pd.DataFrame(dfs[0].groupby('weekDay')['births'].sum())
+seventies = pd.DataFrame(dfs[1].groupby('weekDay')['births'].sum())
+heighties = pd.DataFrame(dfs[2].groupby('weekDay')['births'].sum())
+
+####### extract DataFarme to CSV ##########
 sixties.to_csv(path_or_buf = '60s.csv')
 seventies.to_csv(path_or_buf = '70s.csv')
 heighties.to_csv(path_or_buf = '80s.csv')
