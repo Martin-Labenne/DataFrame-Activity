@@ -45,6 +45,7 @@ for index in births.index:    # create date Serie
     date['date'].append(dt.date(births['year'][index],
                             births['month'][index],
                             int(births['day'][index])))
+    # date is now a datetime Series 
 
 date = pd.DataFrame(date)   # date is now df so we can merge 
 
@@ -53,4 +54,24 @@ births_transformed = pd.merge(births.copy()[['gender','births']], date,
 
 del births_transformed['key_0']
 
+## group the data by date and agregate male and female birhts by date ##
 gb = births_transformed.groupby('date')['births'].sum()
+gb = pd.DataFrame(gb)
+
+##### extact 3 dataframes : 60s, 70s, 80s  ######
+
+# before 1970, January, the 1st
+sixties = gb[gb.index.values < dt.date(1970, 1, 1)]
+
+# between before 1970, January, the 1st and 1980, January, the 1st
+seventies = gb[~(dt.date(1970, 1, 1) <= gb.index.values) ^  
+               (gb.index.values < dt.date(1980, 1, 1))] 
+# not xor to achieve bool Array conjontion
+
+# after 1980, January, the 1st
+heighties = gb[gb.index.values >= dt.date(1980, 1, 1)]
+
+#### extract DataFarme to CSV #####
+sixties.to_csv(path_or_buf = '60s.csv')
+seventies.to_csv(path_or_buf = '70s.csv')
+heighties.to_csv(path_or_buf = '80s.csv')
