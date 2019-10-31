@@ -4,5 +4,10 @@ Après un preprocessing visant à retirer les données aberrantes
 (cf description dans le fichier texte "netoyage des données"), 
 le but était d'extraire 3 dataset (annees 60, annees 70, annees 80)
 
-L'étape suivante sera de produire un graphique comparatif de ces 3 périodes.
- 
+Le script python chargé du preprocessing est transformation_csv.py.
+Il se charge, entre autre, d'agreger les données et de les exporter en 3 csv differents 
+
+Le Rapport est lisible sur Jupyter Notebook car bien plus simple, à mon gout,
+à mettre en page sur ce software.
+
+Bonne lecture.
